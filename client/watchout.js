@@ -1,5 +1,9 @@
 // start slingin' some d3 here.
 var array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+var timeCount = 0;
+var highScore = 0;
+var collisions = 0;
+var collisionsCheck = false;
 d3.select('svg').selectAll('circle').data(array).enter().append('circle')
   .style('r', 15)
   .style('cy', function(d) { return Math.random() * 750; })
@@ -27,29 +31,54 @@ setInterval(function() {
       (circs[0][i].getBoundingClientRect()['height']) / 2;  
 
     var x2 = player[0][0].getBoundingClientRect()['left'] + 
-      (circs[0][i].getBoundingClientRect()['width']) / 2;            //current X position for player
+       player[0][0].getBoundingClientRect()['width'] / 2;            //current X position for player
 
     var y2 = player[0][0].getBoundingClientRect()['top'] + 
-      (circs[0][i].getBoundingClientRect()['height']) / 2;           //current Y position for player
-    //console.log(distFormula(x1, x2, y1, y2));
-    if (distFormula(x1, x2, y1, y2) <= 75) {
+      player[0][0].getBoundingClientRect()['height'] / 2;           //current Y position for player
+    if (distFormula(x1, y1, x2, y2) <= 30) {
+
       console.log('you lose!');
-        //reset score
+      timeCount = 0;
+      d3.select('.current').text(function() {
+        return 'Current score: ' + timeCount; 
+      });
+      collisionsCheck = true;
     }
 
   }
-}, 1000);
+
+}, 10);
+setInterval(function() {
+  timeCount++;
+  if (timeCount > highScore) {
+    highScore = timeCount;
+    d3.select('.highscore').text(function() {
+      return 'High score: ' + highScore;
+    });
+  }
+  d3.select('.current').text(function() {
+    return 'Current score: ' + timeCount; 
+  });
+
+  if (collisionsCheck === true) {
+    collisions++;
+    d3.select('.collisions').text(function() {
+      return 'Collision: ' + collisions;
+    });
+    collisionsCheck = false;
+  }
+
+}, 250);
 
 // d3.select('svg').selectAll('circle').data(array).on('mouseover', function(event) {
 //   d3.select(this).style('fill', 'red');
 // });
 var distFormula = function(x1, y1, x2, y2) {
   return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
-
 };
 
 setInterval(function() {
   d3.select('svg').selectAll('circle').data(array).transition().duration(750)
   .style('cy', function(d) { return Math.random() * 750; })
   .style('cx', function(d) { return Math.random() * 1000; });
-}, 5000);
+}, 1000);
