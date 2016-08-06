@@ -2,6 +2,7 @@
 <html>
   <head>
     <link rel='stylesheet' type='css' href='styles.css'>
+    <link type="text/javascript" src='watchout.js'>
   </head>
   <body>
     <div class="scoreboard">
@@ -10,7 +11,14 @@
       <div class="current">Current score: <span>0</span></div>
       <div class="collisions">Collisions: <span>0</span></div>
     </div>
-    <div class="board"><div class="mouse"></div></div>
+    <div class="board">
+      <svg height="750px" width="1000px">
+        <!-- <circle class="player" r="8px" cx="500" cy="375" /> -->
+        <div class="mouse">
+          
+        </div>
+      </svg>
+    </div>
     <script src="lib/d3.js" charset="utf-8"></script>
     <script src='watchout.js'></script>
   </body>
