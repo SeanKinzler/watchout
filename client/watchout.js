@@ -9,7 +9,7 @@ var collisionsCheck = false;
 var enemies = d3.select('svg').selectAll('image').data(array).enter().append('image')
   .attr('xlink:href', 'shuriken.png')
   .attr('x', function(d) { return Math.random() * 1000; }).attr('y', function(d) { return Math.random() * 750; })
-  .attr('width', 30).attr('height', 30);
+  .attr('width', 30).attr('height', 30).attr('id', 'enemy');
   
   
 
