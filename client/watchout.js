@@ -4,10 +4,14 @@ var timeCount = 0;
 var highScore = 0;
 var collisions = 0;
 var collisionsCheck = false;
-d3.select('svg').selectAll('circle').data(array).enter().append('circle')
-  .style('r', 15)
-  .style('cy', function(d) { return Math.random() * 750; })
-  .style('cx', function(d) { return Math.random() * 1000; });
+
+//Enemy
+var enemies = d3.select('svg').selectAll('image').data(array).enter().append('image')
+  .attr('xlink:href', 'shuriken.png')
+  .attr('x', function(d) { return Math.random() * 1000; }).attr('y', function(d) { return Math.random() * 750; })
+  .attr('width', 30).attr('height', 30);
+  
+  
 
 //Player
 var drag = d3.behavior.drag().on('drag', function(d) {
@@ -21,8 +25,10 @@ var player = d3.select('svg').selectAll('.player').data(playerArr).enter().appen
   .style('cy', (750 / 2))
   .style('cx', (1000 / 2))
   .style('fill', 'red').call(drag);
+
+
 setInterval(function() {
-  var circs = d3.select('svg').selectAll('circle').data(array);
+  var circs = d3.select('svg').selectAll('image').data(array);
   for (var i = 0; i < circs[0].length; i++) {
     var x1 = circs[0][i].getBoundingClientRect()['left'] + //current X position for enemy
       (circs[0][i].getBoundingClientRect()['width']) / 2;
@@ -70,7 +76,7 @@ setInterval(function() {
 
 }, 250);
 
-// d3.select('svg').selectAll('circle').data(array).on('mouseover', function(event) {
+// d3.select('svg').selectAll('shuriken').data(array).on('mouseover', function(event) {
 //   d3.select(this).style('fill', 'red');
 // });
 var distFormula = function(x1, y1, x2, y2) {
@@ -78,7 +84,7 @@ var distFormula = function(x1, y1, x2, y2) {
 };
 
 setInterval(function() {
-  d3.select('svg').selectAll('circle').data(array).transition().duration(750)
-  .style('cy', function(d) { return Math.random() * 750; })
-  .style('cx', function(d) { return Math.random() * 1000; });
+  d3.select('svg').selectAll('image').data(array).transition().duration(750)
+  .style('y', function(d) { return Math.random() * 750; })
+  .style('x', function(d) { return Math.random() * 1000; });
 }, 1000);
